@@ -7,6 +7,10 @@ An open-source project based on the Micropython firmware ESP platform, utilizing
 #### 软件架构
 在esp8266 esp32 esp32s3芯片组，直接使用esp8266_xxxx.py代码即可，esp32c3芯片组必须使用esp32c3_xxxx.py代码或者手动添加RMT通道。
 
+####其他资料相关
+micropython官网下载https://micropython.org/download/
+esp芯片下载方法https://docs.espressif.com/projects/esp-test-tools/zh_CN/latest/esp32/production_stage/tools/flash_download_tool.html
+
 
 #### 安装教程
 
