@@ -1,4 +1,4 @@
-# esp_ws2812b_micropython
+# esp_web_ws2812b_micropython
 
 #### 介绍
 基于micropython固件esp平台利用wifi打开网页控制ws2812b可编程灯带的开源项目
