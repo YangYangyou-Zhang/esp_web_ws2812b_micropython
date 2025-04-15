@@ -5,7 +5,7 @@
 An open-source project based on the Micropython firmware ESP platform, utilizing WiFi to open web pages and control the WS2812b programmable LED strip
 
 #### 软件架构
-软件架构说明
+在esp8266 esp32 esp32s3芯片组，直接使用esp8266_xxxx.py代码即可，esp32c3芯片组必须使用esp32c3_xxxx.py代码或者手动添加RMT通道。
 
 
 #### 安装教程
