@@ -47,14 +47,14 @@ File "neopixel.py", line 1, in write
 OSError: (-258, 'ESP_ERR_INVALID_ARG')
 在代码前计入手动配置 RMT 通道即可
 """
-﻿
+
 #esp32c3平台
 ﻿
 import esp32
 ﻿
 esp32.RMT.bitstream_channel(0)
 ﻿
-#手动配置 RMT 通道
+#手动配置 RMT 通道 #Manually configure RMT channel
 ﻿
 """
 
@@ -66,14 +66,3 @@ File "<stdin>", line ...
 File "neopixel.py", line 1, in write
 OSError: (-258, 'ESP_ERR_INVALID_ARG')
 Just include manual configuration of RMT channel before code
-"""
-
-#ESP32c3 platform
-
-import esp32
-
-esp32.RMT.bitstream_channel(0)
-
-#Manually configure RMT channel
-
-"""
