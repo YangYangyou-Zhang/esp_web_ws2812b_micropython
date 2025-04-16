@@ -47,13 +47,13 @@ File "neopixel.py", line 1, in write
 OSError: (-258, 'ESP_ERR_INVALID_ARG')
 在代码前计入手动配置 RMT 通道即可
 
-"""
+```
 ﻿
 import esp32
 ﻿
 esp32.RMT.bitstream_channel(0)
 ﻿
-"""
+```
 
 
 ####Special skills
