@@ -41,10 +41,12 @@ esp芯片下载方法https://docs.espressif.com/projects/esp-test-tools/zh_CN/la
 #### 特技
 ﻿
 在esp32c3平台使用ws2812b的neopixel库控制时会报错
+```
 Traceback (most recent call last):
 File "<stdin>", line ...
 File "neopixel.py", line 1, in write
 OSError: (-258, 'ESP_ERR_INVALID_ARG')
+```
 在代码前计入手动配置 RMT 通道即可
 
 ```
