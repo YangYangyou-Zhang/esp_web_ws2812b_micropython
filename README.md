@@ -34,7 +34,7 @@ esp芯片下载方法https://docs.espressif.com/projects/esp-test-tools/zh_CN/la
 3.  在颜色选择框选择颜色即可，按下呼吸灯按钮即可一键以当前颜色为主体开始呼吸灯不断变换亮度。
 
 ####Instructions for use
-1. Turn on the power, press the RST button to restart the development board, turn on the phone or computer WiFi, find the set WiFi name and connect (default name is "ESP_SS2812B_BY_YYY", default password is "12345678")
+1. Turn on the power, press the RST button to restart the development board, turn on the phone or computer WiFi, find the set WiFi name and connect (default name is "ESP_WS2812B_BY_YYY", default password is "12345678")
 2. Turn off mobile data, keep connected to the current WiFi, open a browser and go to the website http://192.168.4.1
 3. Select a color in the color selection box and press the breathing light button to start the breathing light continuously changing brightness with the current color as the main body.
 ﻿
