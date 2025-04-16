@@ -58,6 +58,7 @@ esp32.RMT.bitstream_channel(0)
 ﻿
 """
 
+
 ####Special skills
 When using the ws2812b neopixel library control on the ESP32C3 platform, an error will occur
 Traceback (most recent call last):
