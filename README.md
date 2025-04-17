@@ -18,7 +18,7 @@ esp芯片下载方法https://docs.espressif.com/projects/esp-test-tools/zh_CN/la
 #### 安装教程
 ﻿
 1.  给esp芯片组安装micropython固件
-2.  给ws2812b灯带接入5v供电和gnd连接，将信号输入引脚连接到开发板任意引脚，例如此处是GPIO2上（pin1变量名字）（演示视频是接在GPIO9上接线错误，建议接到GPIO8或者其他接口并且做好绝缘，因为接GPIO9(BOOT)会导致芯片无法正常开机）
+2.  给ws2812b灯带接入5v供电和gnd连接，将信号输入引脚连接到开发板任意引脚，例如此处是GPIO2上（pin1变量名字）（演示视频是接在GPIO9上接线错误，建议接到GPIO8或者其他接口并且做好绝缘，因为接GPIO9(ESP32C3芯片的BOOT引脚)会导致芯片无法正常开机）
 3.  使用thonnyIDE下载程序到开发板内并且重命名为main.py
 
 ####Installation tutorial
