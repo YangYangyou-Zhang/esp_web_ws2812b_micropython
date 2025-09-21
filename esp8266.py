@@ -43,6 +43,7 @@ def web_page():
     html = """<!DOCTYPE html>
     <html>
     <head>
+        <meta charset='UTF-8'>
         <title>WS2812B控制</title>
         <style>
             body { text-align: center; margin-top: 50px; }
