@@ -136,3 +136,20 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Project runtime / simulator
+.sim/
+data/settings.json
+data/settings.json.tmp
+data/colors.json
+data/*.tmp
+__pycache__/
+node_modules/
+package-lock.json
+.sim_lite/
+
+# Screenshots: only the ones referenced by README are tracked
+docs/screenshots/*
+!docs/screenshots/mobile-control.png
+!docs/screenshots/desktop-control.png
+!docs/screenshots/lite-mobile.png

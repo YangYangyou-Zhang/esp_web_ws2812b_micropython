@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "name": "余烬 Ember",
+  "type": "builtin",
+  "effect": "fire",
+  "params": {
+    "intensity": 70,
+    "speed": 55,
+    "palette": "classic"
+  }
+}

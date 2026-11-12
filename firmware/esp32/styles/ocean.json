@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "name": "深海 Ocean",
+  "type": "builtin",
+  "effect": "gradient",
+  "params": {
+    "colors": ["#001F3F", "#0074D9", "#7FDBFF"],
+    "speed": 4,
+    "softness": 100,
+    "reverse": true
+  }
+}

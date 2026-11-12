@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "wifi": { "ssid": "ESP_WS2812B_BY_YYY", "password": "12345678" },
+  "hardware": { "pins": [2], "leds": 60 },
+  "render": { "fps": 30, "brightness": 128, "max_leds": 1024, "color_order": "RGB" },
+  "boot": {
+    "mode": "preset",
+    "style": "builtin:rainbow",
+    "params": {},
+    "brightness": 128,
+    "power": true
+  }
+}

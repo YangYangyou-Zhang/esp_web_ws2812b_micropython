@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "name": "糖果 Candy",
+  "type": "builtin",
+  "effect": "wipe",
+  "params": {
+    "colors": ["#FF3D81", "#FFB547", "#22D3EE"],
+    "speed": 45,
+    "mode": "loop"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "name": "日落 Sunset",
+  "type": "builtin",
+  "effect": "gradient",
+  "params": {
+    "colors": ["#FF6B35", "#F7C59F", "#7C3AED"],
+    "speed": 6,
+    "softness": 90,
+    "reverse": false
+  }
+}

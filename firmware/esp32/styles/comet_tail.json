@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "name": "彩虹彗星 Rainbow Comet",
+  "type": "python",
+  "module": "comet_tail",
+  "params": {
+    "speed": 30,
+    "tail": 10
+  },
+  "param_defs": [
+    {
+      "key": "speed",
+      "type": "int",
+      "min": 5,
+      "max": 100,
+      "default": 30,
+      "label": { "zh": "速度", "en": "Speed" }
+    },
+    {
+      "key": "tail",
+      "type": "int",
+      "min": 2,
+      "max": 40,
+      "default": 10,
+      "label": { "zh": "拖尾", "en": "Tail" }
+    }
+  ]
+}

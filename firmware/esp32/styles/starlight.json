@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "name": "星光 Starlight",
+  "type": "builtin",
+  "effect": "twinkle",
+  "params": {
+    "colors": ["#FFFFFF", "#FFDD55", "#88BBFF"],
+    "bg": "#000000",
+    "density": 8,
+    "fade": 35
+  }
+}

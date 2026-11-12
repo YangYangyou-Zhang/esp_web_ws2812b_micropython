@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBC7DD">
+<meta name="author" content="洋洋柚 (YangYangyou) — B站/抖音 洋洋柚Y">
+<meta name="description" content="ESP Web WS2812B MicroPython controller">
+<title>WS2812B Console</title>
+<link rel="stylesheet" href="app.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='10' fill='%234f8cff'/%3E%3C/svg%3E">
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10 21h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </span>
+      <div class="brand-text">
+        <h1>WS2812B</h1>
+        <span data-i18n="brand.sub">灯带控制台</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <span id="connDot" class="conn-dot" title="offline"></span>
+      <button id="langBtn" class="icon-btn" title="Language">EN</button>
+      <button id="themeBtn" class="icon-btn" title="Theme">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div id="offlineBanner" class="offline-banner hidden" data-i18n="offline.banner">设备未连接，正在重试…</div>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-page="control" role="tab">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 3a9 9 0 1 0 9 9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span data-i18n="tab.control">控制</span>
+    </button>
+    <button class="tab" data-page="styles" role="tab">
+      <svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="3" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="3" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="13" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="13" width="8" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+      <span data-i18n="tab.styles">样式</span>
+    </button>
+    <button class="tab" data-page="settings" role="tab">
+      <svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span data-i18n="tab.settings">设置</span>
+    </button>
+  </nav>
+
+  <main>
+    <!-- ===== control ===== -->
+    <section id="page-control" class="page active">
+      <div class="grid">
+
+        <article class="card power-card">
+          <div class="power-row">
+            <div>
+              <span class="eyebrow" data-i18n="control.power">电源</span>
+              <div class="power-state" id="powerState">--</div>
+            </div>
+            <button id="powerBtn" class="power-btn" aria-pressed="false" aria-label="power">
+              <svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 3v9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M6.5 6.5a8 8 0 1 0 11 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="now-style">
+            <span data-i18n="control.now">当前样式</span>
+            <strong id="nowStyle">--</strong>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h2 data-i18n="control.brightness">亮度</h2>
+            <span class="value-pill" id="brightVal">--</span>
+          </div>
+          <input id="brightness" class="range" type="range" min="0" max="255" step="1" value="128">
+          <div class="chips brightness-presets" id="brightPresets">
+            <button class="chip" data-value="64">25%</button>
+            <button class="chip" data-value="128">50%</button>
+            <button class="chip" data-value="191">75%</button>
+            <button class="chip" data-value="255">100%</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h2 data-i18n="status.title">状态</h2>
+          </div>
+          <div class="stats">
+            <div class="stat"><span data-i18n="status.fps">帧率</span><strong id="statFps">--</strong></div>
+            <div class="stat"><span data-i18n="status.leds">灯珠</span><strong id="statLeds">--</strong></div>
+            <div class="stat"><span data-i18n="status.heap">内存</span><strong id="statHeap">--</strong></div>
+            <div class="stat"><span data-i18n="status.uptime">运行</span><strong id="statUptime">--</strong></div>
+            <div class="stat"><span data-i18n="status.render">渲染耗时</span><strong id="statRender">--</strong></div>
+            <div class="stat"><span data-i18n="status.target">目标帧率</span><strong id="statTarget">--</strong></div>
+          </div>
+        </article>
+
+        <article class="card color-card">
+          <div class="card-head">
+            <h2 data-i18n="control.color">颜色</h2>
+            <button id="saveColorBtn" class="ghost-btn" data-i18n="control.saveColor">收藏当前色</button>
+          </div>
+          <button id="currentColor" class="current-color">
+            <span class="swatch" id="currentSwatch"></span>
+            <span class="hex-label" id="colorHex">#FF6600</span>
+            <span class="edit-hint" data-i18n="control.pick">打开取色器</span>
+          </button>
+          <div class="swatch-block">
+            <span class="eyebrow" data-i18n="control.presets">预设颜色</span>
+            <div class="swatches" id="presetSwatches"></div>
+          </div>
+          <div class="swatch-block">
+            <span class="eyebrow" data-i18n="control.saved">我的颜色</span>
+            <div class="swatches" id="userSwatches"></div>
+          </div>
+        </article>
+
+        <article class="card span-2">
+          <div class="card-head">
+            <h2 data-i18n="control.quick">快捷效果</h2>
+            <button class="ghost-btn" data-goto="styles" data-i18n="control.more">全部效果</button>
+          </div>
+          <div class="chips" id="quickEffects"></div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== styles ===== -->
+    <section id="page-styles" class="page">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="styles.effects">内置效果</h2>
+          <p class="muted" data-i18n="styles.effectsHint">点击即可实时应用，参数可调</p>
+        </div>
+        <div class="row-actions">
+          <button id="saveStyleBtn" class="primary-btn" data-i18n="styles.saveCurrent">保存当前样式</button>
+          <button id="importBtn" class="ghost-btn" data-i18n="styles.import">导入 JSON</button>
+          <button id="newPyBtn" class="ghost-btn" data-i18n="styles.newPython">新建 Python 样式</button>
+        </div>
+      </div>
+
+      <div id="effectGrid" class="effect-grid"></div>
+
+      <div id="paramPanel" class="card param-panel hidden">
+        <div class="card-head">
+          <h2 id="paramTitle">--</h2>
+          <div class="row-actions">
+            <button id="savePresetBtn" class="ghost-btn" data-i18n="styles.saveAs">存为我的样式</button>
+            <button id="applyBootBtn" class="ghost-btn" data-i18n="styles.setBoot">设为开机样式</button>
+            <button id="closeParamBtn" class="icon-btn param-close" aria-label="close">×</button>
+          </div>
+        </div>
+        <div id="paramControls" class="param-controls"></div>
+      </div>
+
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="styles.mine">我的样式</h2>
+          <p class="muted" data-i18n="styles.mineHint">保存在设备 flash 中，断电不丢失</p>
+        </div>
+      </div>
+      <div id="styleList" class="style-list"></div>
+      <input id="importFile" type="file" accept=".json,application/json" hidden>
+    </section>
+
+    <!-- ===== settings ===== -->
+    <section id="page-settings" class="page">
+      <div class="grid">
+
+        <article class="card span-2">
+          <div class="card-head"><h2 data-i18n="settings.hardware">硬件</h2></div>
+          <div class="form-grid">
+            <label class="field">
+              <span data-i18n="settings.leds">LED 数量（每条）</span>
+              <input id="setLeds" type="number" min="1" max="2048" step="1" inputmode="numeric">
+            </label>
+            <label class="field">
+              <span data-i18n="settings.pins">数据引脚（逗号分隔）</span>
+              <input id="setPins" type="text" inputmode="numeric" spellcheck="false">
+            </label>
+            <label class="field">
+              <span><span data-i18n="settings.fps">目标帧率</span> <b id="fpsVal">--</b></span>
+              <input id="setFps" type="range" class="range" min="5" max="60" step="1">
+            </label>
+            <label class="field">
+              <span data-i18n="settings.colorOrder">颜色顺序</span>
+              <select id="setOrder">
+                <option value="RGB">RGB</option>
+                <option value="RBG">RBG</option>
+                <option value="GRB">GRB</option>
+                <option value="GBR">GBR</option>
+                <option value="BRG">BRG</option>
+                <option value="BGR">BGR</option>
+              </select>
+            </label>
+          </div>
+          <button id="saveHwBtn" class="primary-btn" data-i18n="common.applySave">应用并保存</button>
+          <p class="hint" data-i18n="settings.pinHint">修改引脚或 AP 设置需要重启设备后生效。LED 数量会立即生效。</p>
+        </article>
+
+        <article class="card span-2">
+          <div class="card-head"><h2 data-i18n="settings.boot">开机设置</h2></div>
+          <div class="form-grid">
+            <label class="field">
+              <span data-i18n="settings.bootMode">开机模式</span>
+              <select id="bootMode">
+                <option value="preset" data-i18n="settings.modePreset">使用指定样式</option>
+                <option value="off" data-i18n="settings.modeOff">保持关闭</option>
+              </select>
+            </label>
+            <label class="field">
+              <span data-i18n="settings.bootStyle">开机样式</span>
+              <select id="bootStyle"></select>
+            </label>
+            <label class="field">
+              <span><span data-i18n="settings.bootBright">开机亮度</span> <b id="bootBrightVal">--</b></span>
+              <input id="bootBright" type="range" class="range" min="0" max="255" step="1">
+            </label>
+          </div>
+          <div class="row-actions">
+            <button id="saveBootBtn" class="primary-btn" data-i18n="common.save">保存</button>
+            <button id="useCurrentBootBtn" class="ghost-btn" data-i18n="settings.useCurrent">用当前样式作为开机样式</button>
+          </div>
+        </article>
+
+        <article class="card span-2">
+          <div class="card-head"><h2 data-i18n="settings.network">网络（AP）</h2></div>
+          <div class="form-grid">
+            <label class="field">
+              <span>SSID</span>
+              <input id="setSsid" type="text" maxlength="32" spellcheck="false">
+            </label>
+            <label class="field">
+              <span data-i18n="settings.password">密码</span>
+              <input id="setPass" type="text" maxlength="63" spellcheck="false">
+            </label>
+          </div>
+          <button id="saveWifiBtn" class="primary-btn" data-i18n="common.save">保存</button>
+        </article>
+
+        <article class="card span-2">
+          <div class="card-head"><h2 data-i18n="settings.device">设备信息</h2></div>
+          <dl id="deviceInfo" class="device-info"></dl>
+          <div class="project-block">
+            <span class="eyebrow" data-i18n="settings.project">项目地址</span>
+            <div class="project-links">
+              <a class="mini-btn" href="https://github.com/YangYangyou-Zhang/esp_web_ws2812b_micropython" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a class="mini-btn" href="https://gitee.com/zhangyangyangyou/esp_web_ws2812b_micropython" target="_blank" rel="noopener noreferrer">Gitee</a>
+              <a class="mini-btn" href="https://www.bilibili.com/video/BV1zz5zzFEbM" target="_blank" rel="noopener noreferrer">Bilibili</a>
+            </div>
+            <div class="project-meta">
+              <span><span data-i18n="settings.author">作者</span>：<strong data-i18n="settings.authorName">洋洋柚（B站/抖音 洋洋柚Y）</strong></span>
+              <span><span data-i18n="settings.license">协议</span>：CC BY-NC-SA 4.0 · <span data-i18n="settings.nonCommercial">禁止商用 NonCommercial</span></span>
+            </div>
+            <p class="hint" data-i18n="settings.linksHint">链接需联网访问，也可长按复制</p>
+          </div>
+          <div class="row-actions">
+            <button id="logBtn" class="ghost-btn" data-i18n="settings.logs">查看日志</button>
+            <button id="rebootBtn" class="danger-btn" data-i18n="settings.reboot">重启设备</button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ===== colour picker ===== -->
+<div class="modal" id="colorModal" aria-hidden="true">
+  <div class="modal-card picker-card">
+    <div class="modal-head">
+      <h3 data-i18n="picker.title">选择颜色</h3>
+      <button class="icon-btn" data-close aria-label="close">×</button>
+    </div>
+    <div class="sv-area" id="svArea">
+      <div class="sv-white"></div>
+      <div class="sv-black"></div>
+      <div class="sv-cursor" id="svCursor"></div>
+    </div>
+    <div class="hue-slider" id="hueSlider">
+      <div class="hue-cursor" id="hueCursor"></div>
+    </div>
+    <div class="picker-row">
+      <span class="preview" id="pickPreview"></span>
+      <input id="pickHex" class="hex-input" maxlength="7" spellcheck="false" autocomplete="off">
+    </div>
+    <div class="rgb-sliders">
+      <label>R<input id="pickR" type="range" min="0" max="255"><b id="pickRv">0</b></label>
+      <label>G<input id="pickG" type="range" min="0" max="255"><b id="pickGv">0</b></label>
+      <label>B<input id="pickB" type="range" min="0" max="255"><b id="pickBv">0</b></label>
+    </div>
+    <div class="swatch-block">
+      <span class="eyebrow" data-i18n="control.presets">预设颜色</span>
+      <div class="swatches" id="pickSwatches"></div>
+    </div>
+    <div class="swatch-block">
+      <span class="eyebrow" data-i18n="control.saved">我的颜色</span>
+      <div class="swatches" id="pickUserSwatches"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="ghost-btn" data-close data-i18n="common.cancel">取消</button>
+      <button class="primary-btn" id="pickOk" data-i18n="common.confirm">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== generic dialog ===== -->
+<div class="modal" id="dialogModal" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="dlgTitle">--</h3>
+      <button class="icon-btn" data-close aria-label="close">×</button>
+    </div>
+    <div id="dlgBody" class="dlg-body"></div>
+    <div id="dlgActions" class="modal-actions"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<noscript><p style="padding:24px;text-align:center">JavaScript is required.</p></noscript>
+<script src="app.js"></script>
+</body>
+</html>

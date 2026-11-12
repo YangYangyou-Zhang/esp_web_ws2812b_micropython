@@ -1,0 +1,146 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://gitee.com/zhangyangyangyou/esp_web_ws2812b_micropython/style.schema.json",
+  "$comment": "Author: 洋洋柚 (Bilibili/Douyin: 洋洋柚Y). Project: https://github.com/YangYangyou-Zhang/esp_web_ws2812b_micropython | https://gitee.com/zhangyangyangyou/esp_web_ws2812b_micropython. Video: https://www.bilibili.com/video/BV1zz5zzFEbM. License: CC BY-NC-SA 4.0 (NonCommercial).",
+  "title": "ESP Web WS2812B style",
+  "description": "A saved LED style for esp_web_ws2812b_micropython. One JSON file per style in /styles. Built-in effects are declarative; Python styles reference a sibling .py file.",
+  "type": "object",
+  "required": ["schema", "name", "type"],
+  "additionalProperties": true,
+  "properties": {
+    "schema": {
+      "const": 1,
+      "description": "Format version. Always 1."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{0,23}$",
+      "description": "File name stem. Assigned by the device from the upload path; optional in files."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "description": "Display name (UTF-8). 显示名称。"
+    },
+    "type": {
+      "enum": ["builtin", "python"],
+      "description": "builtin = declarative effect; python = user script."
+    },
+    "effect": {
+      "type": "string",
+      "enum": [
+        "solid", "gradient", "breath", "rainbow", "rainbow_flow",
+        "chase", "theater_chase", "comet", "sparkle", "twinkle",
+        "fire", "candle", "wipe", "scanner", "strobe"
+      ],
+      "description": "Required when type=builtin. See docs/STYLE_FORMAT.md for parameters."
+    },
+    "module": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{0,23}$",
+      "description": "Required when type=python. Name of the sibling <module>.py file."
+    },
+    "params": {
+      "type": "object",
+      "description": "Effect parameters. Missing keys fall back to effect defaults."
+    },
+    "param_defs": {
+      "type": "array",
+      "maxItems": 16,
+      "description": "Parameter descriptors for python styles. Built-in styles get these from the firmware.",
+      "items": { "$ref": "#/definitions/param_def" }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "type": { "const": "builtin" } },
+        "required": ["type"]
+      },
+      "then": { "required": ["effect"] }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "python" } },
+        "required": ["type"]
+      },
+      "then": { "required": ["module"] }
+    }
+  ],
+  "definitions": {
+    "hex": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$"
+    },
+    "label": {
+      "type": "object",
+      "properties": {
+        "zh": { "type": "string" },
+        "en": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "param_def": {
+      "type": "object",
+      "required": ["key", "type"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]{0,23}$"
+        },
+        "type": {
+          "enum": ["int", "bool", "color", "colors", "enum"]
+        },
+        "label": { "$ref": "#/definitions/label" },
+        "min": { "type": "integer" },
+        "max": { "type": "integer" },
+        "default": {},
+        "options": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "required": ["value"],
+            "properties": {
+              "value": { "type": ["string", "integer", "number", "boolean"] },
+              "label": { "$ref": "#/definitions/label" }
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "enum" } } },
+          "then": { "required": ["options"] }
+        }
+      ],
+      "additionalProperties": true
+    }
+  },
+  "examples": [
+    {
+      "schema": 1,
+      "name": "Sunset",
+      "type": "builtin",
+      "effect": "gradient",
+      "params": {
+        "colors": ["#FF6B35", "#F7C59F", "#7C3AED"],
+        "speed": 6,
+        "softness": 90,
+        "reverse": false
+      }
+    },
+    {
+      "schema": 1,
+      "name": "Rainbow Comet",
+      "type": "python",
+      "module": "comet_tail",
+      "params": { "speed": 30, "tail": 10 },
+      "param_defs": [
+        { "key": "speed", "type": "int", "min": 5, "max": 100, "default": 30,
+          "label": { "zh": "速度", "en": "Speed" } }
+      ]
+    }
+  ]
+}

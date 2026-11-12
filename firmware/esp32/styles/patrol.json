@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "name": "巡逻 Patrol",
+  "type": "builtin",
+  "effect": "scanner",
+  "params": {
+    "color": "#FF1A1A",
+    "bg": "#000000",
+    "tail": 30,
+    "speed": 60
+  }
+}
