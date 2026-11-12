@@ -23,8 +23,10 @@ no app required.
 
 单文件版：`python tools/build_single.py` → `dist/main_single.py`。详细说明见 [VERSIONS.md](VERSIONS.md)。
 
-![mobile](docs/screenshots/mobile-control.png)
-![desktop](docs/screenshots/desktop-control.png)
+<p align="center">
+  <img src="docs/screenshots/mobile-control.png" width="240" alt="mobile UI">
+  <img src="docs/screenshots/desktop-control.png" width="600" alt="desktop UI">
+</p>
 
 ---
 
@@ -109,7 +111,9 @@ ESP8266 用极简版：[`firmware/esp8266_lite/`](firmware/esp8266_lite) — 只
 没有 JSON 样式、多灯带和自定义 Python 效果。详见
 [firmware/esp8266_lite/README.md](firmware/esp8266_lite/README.md)。
 
-![lite](docs/screenshots/lite-mobile.png)
+<p align="center">
+  <img src="docs/screenshots/lite-mobile.png" width="240" alt="ESP8266 Lite UI">
+</p>
 
 ### 首次使用
 
@@ -318,7 +322,9 @@ Six effects, brightness/power, built-in colour picker, LED count/pin/boot settin
 stored in `lite.cfg`. No JSON styles, multiple strips or custom Python effects.
 See [firmware/esp8266_lite/README.md](firmware/esp8266_lite/README.md).
 
-![lite](docs/screenshots/lite-mobile.png)
+<p align="center">
+  <img src="docs/screenshots/lite-mobile.png" width="240" alt="ESP8266 Lite UI">
+</p>
 
 ### First boot
 
