@@ -3,13 +3,14 @@
 本仓库有三个可烧录版本，按芯片选择。三个版本共用同一套粉蓝 UI 和强制门户。
 This repository contains three firmware variants; pick one by chip.
 
-| 版本 | 适用芯片 | 源码目录 | 主要能力 | 安装 |
+| 版本<br>Version | 适用芯片<br>Chip | 源码目录<br>Source | 主要能力<br>Features | 安装<br>Install |
 |---|---|---|---|---|
-| **完整版 Full** | ESP32 / ESP32-C3 / ESP32-S3 | [`firmware/esp32/`](firmware/esp32) | 15 个效果、样式保存/导入导出、Python 自定义效果、15+ 参数元数据、强制门户 | `python tools/install.py COM5` |
-| **ESP8266 Lite** | ESP8266（4 MB flash） | [`firmware/esp8266_lite/`](firmware/esp8266_lite) | 6 个效果、取色器、亮度/电源、LED 数/引脚/开机效果、强制门户 | `python tools/install.py COM5 --lite --reset` |
-| **Legacy** | ESP8266 / ESP32（旧版） | [`legacy/`](legacy) | 旧版单文件脚本，仅保留参考 | 手动上传为 `main.py` |
+| **完整版<br>Full** | ESP32 / ESP32-C3 / ESP32-S3 | [`firmware/esp32/`](firmware/esp32) | 15 个效果、样式保存/导入导出、Python 自定义效果、15+ 参数元数据、强制门户<br>15 effects, style save/import/export, custom Python effects, 15+ parameter metadata, captive portal | `python tools/install.py COM5` |
+| **ESP8266 Lite** | ESP8266<br>（4 MB flash / 4 MB） | [`firmware/esp8266_lite/`](firmware/esp8266_lite) | 6 个效果、取色器、亮度/电源、LED 数/引脚/开机效果、强制门户<br>6 effects, colour picker, brightness/power, LED count/pin/boot effect, captive portal | `python tools/install.py COM5 --lite --reset` |
+| **Legacy** | ESP8266 / ESP32<br>（旧版 / legacy） | [`legacy/`](legacy) | 旧版单文件脚本，仅保留参考<br>Legacy single-file scripts, kept for reference only | 手动上传为 `main.py`<br>Upload manually as `main.py` |
 
-单文件版：`python tools/build_single.py` → `dist/main_single.py`（仅完整版，ESP32 系列）。
+单文件版 Single-file: `python tools/build_single.py` → `dist/main_single.py`
+（仅完整版，ESP32 系列 / Full firmware only, ESP32 family）。
 
 ---
 

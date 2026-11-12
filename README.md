@@ -15,13 +15,14 @@ no app required.
 
 ### 版本选择 / Versions
 
-| 版本 | 芯片 | 源码目录 | 功能 | 安装 |
+| 版本<br>Version | 芯片<br>Chip | 源码目录<br>Source | 功能<br>Features | 安装<br>Install |
 |---|---|---|---|---|
-| 完整版 Full | ESP32 / C3 / S3 | `firmware/esp32/` | 15 效果、样式系统、Python 自定义、强制门户 | `python tools/install.py COM5` |
-| ESP8266 Lite | ESP8266 | `firmware/esp8266_lite/` | 6 效果、取色器、强制门户 | `python tools/install.py COM5 --lite --reset` |
-| Legacy | ESP8266 / ESP32 | `legacy/` | 旧版单文件脚本 | 手动上传为 `main.py` |
+| **完整版<br>Full** | ESP32 / C3 / S3 | `firmware/esp32/` | 15 效果、样式系统、Python 自定义、强制门户<br>15 effects, style system, custom Python, captive portal | `python tools/install.py COM5` |
+| **ESP8266 Lite** | ESP8266<br>(4 MB flash) | `firmware/esp8266_lite/` | 6 效果、取色器、强制门户<br>6 effects, colour picker, captive portal | `python tools/install.py COM5 --lite --reset` |
+| **Legacy** | ESP8266 / ESP32 | `legacy/` | 旧版单文件脚本<br>Legacy single-file scripts | 手动上传为 `main.py`<br>Upload manually as `main.py` |
 
-单文件版：`python tools/build_single.py` → `dist/main_single.py`。详细说明见 [VERSIONS.md](VERSIONS.md)。
+单文件版 Single-file: `python tools/build_single.py` → `dist/main_single.py`。
+详细说明 Details: [VERSIONS.md](VERSIONS.md)。
 
 <p align="center">
   <img src="docs/screenshots/mobile-control.png" width="240" alt="mobile UI">
@@ -254,6 +255,8 @@ python -m py_compile firmware/esp32/*.py firmware/esp8266_lite/main.py tools/*.p
 署名—非商业性使用—相同方式共享 4.0 国际）。
 详见 [LICENSE](LICENSE) 与 [NOTICE.md](NOTICE.md)。
 
+> **允许个人 DIY 自用、学习、研究和非商业分享；禁止任何商业用途（含售卖套件）。**
+
 - **允许**：个人 DIY、学习、研究、非商业分享与改编。
 - **要求**：署名「洋洋柚（B站/抖音 洋洋柚Y）」并附项目地址；改编版必须以相同许可发布，
   并注明是否做了修改。
@@ -410,6 +413,8 @@ firmware/web code as the device.
 Original work is licensed under **CC BY-NC-SA 4.0**
 (Attribution-NonCommercial-ShareAlike 4.0 International).
 See [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).
+
+> **Personal DIY, study, research and non-commercial sharing are allowed; any commercial use (including selling kits) is not.**
 
 - Allowed: personal DIY, study, research and non-commercial sharing/adaptation.
 - Required: credit "洋洋柚 (Bilibili/Douyin: 洋洋柚Y)" with a link to the project;
